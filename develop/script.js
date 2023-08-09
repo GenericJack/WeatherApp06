@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    const API_KEY = "YOUR_OPENWEATHERMAP_API_KEY";
+    const API_KEY = "API KEY";
 
     // Function to fetch weather data from OpenWeatherMap API
     function getWeatherData(city) {
         // build the api url using coordinates
-        const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
+        const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${API_KEY}&units-metric';
 
         // fetch current weather data
         fetch(apiUrl)
@@ -17,7 +17,7 @@ $(document).ready(function () {
             console.error("Error fetching current weather data:", error);
         });
         // build api url for 5 day forecast
-        const forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}';
+        const forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric';
 
         // fetch 5 day forecast data
         fetch(forecastUrl)
@@ -60,8 +60,9 @@ $(document).ready(function () {
 
         forecastSection.empty();
 
-        // loop through forecast dataand siplay each day's forecast
+        // loop through forecast data and siplay each day's forecast
         for (let i = 0; i < data.list.length; i++) {
+
             // extract data
             const forecast = data.list[i];
             const date = moment.unix(forecast.dt).format("MMMM D, YYYY");
@@ -69,6 +70,23 @@ $(document).ready(function () {
             const temperature = forecast.main.temp;
             const humidity = forecast.main.humidity;
             const windSpeed = forecast.wind.speed;
+
+            // create container for each day's forecast
+            const dayConatiner = $("<div>").addClass("forecast-day");
+
+            // create elements to display forecast data
+            const dateEl = $("<h6>").text(date);
+            const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+            const iconEl = $("<img>").attr("src", iconUrl).attr("alt", "Weather Icon");
+            const tempEl = $("<p>").text("Temp: " + temperature + " °F");
+            const humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+            const windEl = $("<p>").text("Wind: " + windSpeed + " MPH");
+
+            // append elements to the day's container
+            dayConatiner.append(dateEl, iconEl, tempEl, humidityEl, windEl);
+
+            // append the day's container to the forecast section
+            forecastSection.append(dayContainer);
         }
     }
 
@@ -85,6 +103,9 @@ $(document).ready(function () {
         }
     });
 
+    const city = "North Port";
+    getWeatherData(city);
+
     function addToSearchHistory(city) {
         // code to add city to the searchHistory section
     }
@@ -95,3 +116,28 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(function() {
+    // Style the title
+    $("h1.display-3").css({
+      "color": "#333",
+      "font-size": "2rem",
+      "margin-bottom": "20px"
+    });
+  
+    // Style the search bar
+    $(".search-form").css({
+      "background-color": "#f8f9fa",
+      "border": "1px solid #ced4da",
+      "border-radius": "4px",
+      "padding": "8px 15px",
+      "margin-bottom": "20px"
+    });
+  
+    // Style the forecast dashboard
+    $(".forecast").css({
+      "background-color": "#fff",
+      "border": "1px solid #ced4da",
+      "border-radius": "4px",
+      "padding": "20px"
+    });
+  });
