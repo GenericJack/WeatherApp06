@@ -32,11 +32,44 @@ $(document).ready(function () {
     }
     // function to display weather data
     function displayCurrentWeather(data) {
-        // code to display current weather data in the currentWeather section
+     const currentWeatherSection = $("#currentWeather");
+
+     currentWeatherSection.empty();
+
+    //  extract data from api response
+     const city = data.name;
+     const date = moment.unix(data.dt).format("MMMM D, YYYY");
+     const iconCode = data.weather[0].icon;
+     const temperature = data.main.temp;
+     const humidity = data.main.humidity;
+     const windSpeed = data.wind.speed;
+     
+    //  elements to display weather data
+     const cityEl = $("<h2>").text(city + " (" + date + ")");
+     const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+     const iconEl = $("<img>").attr("src", iconUrl).attr("alt", "Weather Icon");
+     const tempEl = $("<p>").text("Temperature: " + temperature + " °F");
+     const humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+     const windEl = $("<p>").text("Wind Speed: " + windSpeed + " MPH");
+
+     currentWeatherSection.append(cityEl, iconEl, tempEl, humidityEl, windEl);
     }
     // function display 5 day forecast data
     function displayForecast(data) {
-    // code to display forecast data in the forecast section
+        const forecastSection = $("#forecast");
+
+        forecastSection.empty();
+
+        // loop through forecast dataand siplay each day's forecast
+        for (let i = 0; i < data.list.length; i++) {
+            // extract data
+            const forecast = data.list[i];
+            const date = moment.unix(forecast.dt).format("MMMM D, YYYY");
+            const iconCode = forecast.weather[0].icon;
+            const temperature = forecast.main.temp;
+            const humidity = forecast.main.humidity;
+            const windSpeed = forecast.wind.speed;
+        }
     }
 
     // function to handle form submission
