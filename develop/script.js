@@ -4,7 +4,7 @@ $(document).ready(function () {
     // Function to fetch weather data from OpenWeatherMap API
     function getWeatherData(city) {
         // build the api url using coordinates
-        const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${API_KEY}&units-metric';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
         // fetch current weather data
         fetch(apiUrl)
@@ -17,7 +17,7 @@ $(document).ready(function () {
             console.error("Error fetching current weather data:", error);
         });
         // build api url for 5 day forecast
-        const forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric';
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`;
 
         // fetch 5 day forecast data
         fetch(forecastUrl)
@@ -50,10 +50,10 @@ $(document).ready(function () {
      currentWeatherSection.empty();
 
     //  extract data from api response
-    const initialCities = ["North Port", "Atlanta", "Orlando", "Greenville", "Asheville"];
-    initialCities.forEach(city => {
-        addToCityList(city);
-    });
+    // const initialCities = ["North Port", "Atlanta", "Orlando", "Greenville", "Asheville"];
+    // initialCities.forEach(city => {
+    //     addToCityList(city);
+    // });
 
 
      const city = data.name;
