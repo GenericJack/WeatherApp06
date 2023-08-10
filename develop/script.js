@@ -102,7 +102,7 @@ $(document).ready(function () {
             const windEl = $("<p>").text("Wind: " + windSpeed + " MPH");
 
             // append elements to the day's container
-            dayConatiner.append(dateEl, iconEl, tempEl, humidityEl, windEl);
+            dayContainer.append(dateEl, iconEl, tempEl, humidityEl, windEl);
 
             // append the day's container to the forecast section
             forecastSection.append(dayContainer);
