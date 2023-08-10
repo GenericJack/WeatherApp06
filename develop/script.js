@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const API_KEY = "56def137add70c2e99f893fc7065749b";
+    const API_KEY = "c7b993b28b56628a3971fc3e84734d3a";
 
     // Function to fetch weather data from OpenWeatherMap API
     function getWeatherData(city) {
@@ -53,7 +53,7 @@ $(document).ready(function () {
     const initialCities = ["North Port", "Atlanta", "Orlando", "Greenville", "Asheville"];
     initialCities.forEach(city => {
         addToCityList(city);
-    })
+    });
 
 
      const city = data.name;
@@ -122,7 +122,7 @@ $(document).ready(function () {
         }
     });
 
-    const city = "North Port";
+    const city = "";
     getWeatherData(city);
 
     function addToSearchHistory(city) {
