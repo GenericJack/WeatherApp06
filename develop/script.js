@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const API_KEY = "API KEY";
+    const API_KEY = "56def137add70c2e99f893fc7065749b";
 
     // Function to fetch weather data from OpenWeatherMap API
     function getWeatherData(city) {
@@ -8,8 +8,8 @@ $(document).ready(function () {
 
         // fetch current weather data
         fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
+            .then(response => response.json())
+            .then(data => {
             // display current weather data
             displayCurrentWeather(data);
         })
@@ -29,6 +29,19 @@ $(document).ready(function () {
         .catch(error => {
             console.error("Error fetching forecast data:", error);
         });
+
+        // function for city list
+        function addToCityList(city) {
+            const cityList =$("#cityList");
+            const listItem = $("<li>").text(city).addClass("city-item");
+            cityList.append(listItem);
+        }
+
+        // add event listener for sidebar
+        $("#cityList").on("click", ".city-item", function () {
+            const city = $(this).text();
+            getWeatherData(city);
+        });
     }
     // function to display weather data
     function displayCurrentWeather(data) {
@@ -37,6 +50,12 @@ $(document).ready(function () {
      currentWeatherSection.empty();
 
     //  extract data from api response
+    const initialCities = ["North Port", "Atlanta", "Orlando", "Greenville", "Asheville"];
+    initialCities.forEach(city => {
+        addToCityList(city);
+    })
+
+
      const city = data.name;
      const date = moment.unix(data.dt).format("MMMM D, YYYY");
      const iconCode = data.weather[0].icon;
@@ -72,7 +91,7 @@ $(document).ready(function () {
             const windSpeed = forecast.wind.speed;
 
             // create container for each day's forecast
-            const dayConatiner = $("<div>").addClass("forecast-day");
+            const dayContainer = $("<div>").addClass("forecast-day");
 
             // create elements to display forecast data
             const dateEl = $("<h6>").text(date);
@@ -114,30 +133,33 @@ $(document).ready(function () {
         getWeatherData(city);
     });
 
-});
-
-$(document).ready(function() {
+    function styleElements() {
     // Style the title
     $("h1.display-3").css({
-      "color": "#333",
-      "font-size": "2rem",
-      "margin-bottom": "20px"
+        "color": "#333",
+        "font-size": "2rem",
+        "margin-bottom": "20px"
     });
-  
+
     // Style the search bar
-    $(".search-form").css({
-      "background-color": "#f8f9fa",
-      "border": "1px solid #ced4da",
-      "border-radius": "4px",
-      "padding": "8px 15px",
-      "margin-bottom": "20px"
+    $(".mb-3").css({
+        "background-color": "#f8f9fa",
+        "border": "1px solid #ced4da",
+        "border-radius": "4px",
+        "padding": "8px 15px",
+        "margin-bottom": "20px"
     });
-  
+
     // Style the forecast dashboard
     $(".forecast").css({
-      "background-color": "#fff",
-      "border": "1px solid #ced4da",
-      "border-radius": "4px",
-      "padding": "20px"
+        "background-color": "#fff",
+        "border": "1px solid #ced4da",
+        "border-radius": "4px",
+        "padding": "20px"
     });
-  });
+}
+
+styleElements();
+
+});
+
